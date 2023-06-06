@@ -1,15 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const tab = createBottomTabNavigator();
+
+function AccueilScreen() {
+  return (
+    <View style={styles.container}>
+      <Text>Home ! </Text>
+    </View>
+  )
+}
+
+function ParametreScreen() {
+  return (
+    <View style={styles.container}>
+      <Text>Parametre </Text>
+    </View>
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logoHome}
-        source={require('./assets/bibliotheka_icon.png')}
-      />
-      <Text>Bibliotheka</Text>
-    </View>
+    <NavigationContainer>
+      <tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+
+            if(route.name == "Accueil") {
+              iconName = "home";
+            } else if (route.name == "Parametre") {
+              iconName = "settings";
+            }
+
+            return <Ionicons name={iconName} size={25} color='#402B1B'/>
+          }
+        })}
+      >
+        <tab.Screen name='Accueil' component={AccueilScreen}/>
+        <tab.Screen name='Parametre' component={ParametreScreen}/>
+      </tab.Navigator>
+    </NavigationContainer>
   );
 }
 
