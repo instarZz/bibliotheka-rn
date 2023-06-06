@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useState } from 'react';
 
 const tab = createBottomTabNavigator();
 
 function AccueilScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home ! </Text>
-    </View>
+    <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode="cover" style={styles.imageBackground}>
+      <Text style={styles.textHome}>Bibliotheka</Text>
+    </ImageBackground>
+  </View>
   )
 }
 
@@ -26,6 +29,8 @@ export default function App() {
     <NavigationContainer>
       <tab.Navigator
         screenOptions={({route}) => ({
+          tabBarStyle: { backgroundColor: '#F5E5D7'},
+          tabBarActiveTintColor: '#402B1B',
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
 
@@ -49,13 +54,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5E5D7',
-    alignItems: 'center',
+  },
+  imageBackground: {
+    flex: 1,
     justifyContent: 'center',
   },
-  
-  logoHome: {
-    width: '20%',
-    height: '20%'
+  textHome: {
+    color: '#F5E5D7',
+    fontFamily: 'Nunito',
+    fontSize: 30,
+    lineHeight: 84,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#000000c0',
+    width: '100%',
   }
 });
