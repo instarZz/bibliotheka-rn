@@ -41,13 +41,33 @@ export default function App() {
           tabBarVisible: isUserLoggedIn,
         })}
       >
-        <tab.Screen name='Accueil' component={Home} options={{ headerShown: false }}/>
+        <tab.Screen 
+          name='Accueil' 
+          component={Home} 
+          options={{ headerShown: false }}
+        />
         {isUserLoggedIn && (
-          <tab.Screen name='Mon Profil' component={Profil} options={{ headerShown: false }} />
+          <tab.Screen 
+            name='Mon Profil' 
+            component={Profil} 
+            options={{ headerShown: false }} 
+          />
         )}
-        <tab.Screen name='Paramètres' component={Parametre} options={{ headerShown: false }}/>
-        <tab.Screen name='Inscription' component={Inscription} options={{ headerShown: false }}/>
-        <tab.Screen name='Connexion' component={Connexion} options={{ headerShown: false }}/>
+        <tab.Screen 
+          name='Paramètres' 
+          component={Parametre} 
+          options={{ headerShown: false }}
+        />
+        <tab.Screen 
+          name='Inscription' 
+          component={Inscription} 
+          options={{ headerShown: false }}
+        />
+        <tab.Screen 
+          name='Connexion' 
+          component={Connexion} 
+          options={{ headerShown: false }}
+        />
       </tab.Navigator>
     </NavigationContainer>
   );
