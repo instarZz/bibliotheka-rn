@@ -1,9 +1,9 @@
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 
-const Parametre = () => {
+const Inscription = () => {
     return (
         <View style={styles.container}>
-            <Text>Parametre</Text>
+            <Text>Inscription</Text>
         </View>
     );
 };
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
     },
 });
   
-export default Parametre;
+export default Inscription;
