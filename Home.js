@@ -13,20 +13,24 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         alignContent: 'center',
         backgroundColor: '#EBE7E5',
     },
+
     imageLogo: {
         alignSelf: 'center',
         width: 200,
         height: 200,
     },
+
     imageBackground: {
         flex: 1,
         justifyContent: 'center',
     },
+    
     textHome: {
         color: '#F5E5D7',
         fontSize: 30,

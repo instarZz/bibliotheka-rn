@@ -47,9 +47,14 @@ const Connexion = () => {
                         value={password}
                     />
 
-                    <TouchableOpacity style={styles.btn}>
+                    {/* <TouchableOpacity style={styles.btn}>
                         <Text style={styles.btnText}>Se Connecter</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
+                    <Button
+                        title="Se connecter"
+                        color="#402B1B"
+                    />
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -57,12 +62,14 @@ const Connexion = () => {
 };
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'center',
     },
+
     containerRegister: {
-        height: '90%',
+        height: '40%',
         width: '90%',
         backgroundColor: '#AF8F7C',
         padding: 16,
@@ -70,6 +77,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         elevation: 5,
     },
+
     imgBackground: {
         flex: 1,
         width: '100%',
@@ -77,12 +85,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
     containerImg: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 26,
     },
+
     input: {
         height: 40,
         width: '100%',
@@ -93,25 +103,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBE7E5',
 
     },
+
     img: {
         width: 80,
         height: 80,
         marginLeft: 16,
         marginRight: 16,
     },
+
     title: {
         fontSize: 44,
         fontWeight: 'bold',
         textAlign: 'center',
         color: '#EBE7E5',
-        marginBottom: 146,
+        marginBottom: 16,
     },
+
     btn: {
         marginBottom: 16,
         backgroundColor: '#402B1B',
         borderRadius: 10,
         padding: 10,
     },  
+    
     btnText: {
         textAlign: 'center',
         color: 'white',

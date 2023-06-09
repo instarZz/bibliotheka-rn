@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity, Button, Modal, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Profil = () => {
@@ -49,7 +49,7 @@ const Profil = () => {
                                     />
                                     
                                     <View style={styles.miniContainerBtn}>
-                                        <Pressable
+                                        {/* <Pressable
                                         style={styles.btn}
                                         onPress={{}}>
                                             <Text style={styles.btnText}>Rechercher</Text>
@@ -59,13 +59,23 @@ const Profil = () => {
                                         style={styles.btn}
                                         onPress={() => setModalVisible(!modalVisible)}>
                                             <Text style={styles.btnText}>Fermer</Text>
-                                        </Pressable>
+                                        </Pressable> */}
+                                    <Button
+                                        title="Rechercher"
+                                        color="#402B1B"
+                                    />
+                                    <View style={styles.marginBottom} />
+                                    <Button
+                                        title="Fermer"
+                                        color="#402B1B"
+                                        onPress={() => setModalVisible(!modalVisible)}
+                                    />
                                     </View>
                                 </View>
                             </View>
                         </Modal>
 
-                        <TouchableOpacity 
+                        {/* <TouchableOpacity 
                             style={styles.btn}
                             onPress={() => setModalVisible(true)}
                             >
@@ -78,7 +88,23 @@ const Profil = () => {
 
                         <TouchableOpacity style={styles.btn}>
                             <Text style={styles.btnText}>Editer mon profil</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+
+                        <Button
+                            title="Ajouter un livre"
+                            color="#402B1B"
+                            onPress={() => setModalVisible(true)}
+                        />
+                        <View style={styles.marginBottom} />
+                        <Button
+                            title="Statistiques"
+                            color="#402B1B"
+                        />
+                        <View style={styles.marginBottom} />
+                        <Button
+                            title="Editer mon profil"
+                            color="#402B1B"
+                        />
 
                     </View>
                 </View>
@@ -92,11 +118,13 @@ const Profil = () => {
 };
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         alignContent: 'center',
         backgroundColor: '#EBE7E5',
     },
+
     containerProfil: {
         display: 'flex',
         flexDirection: 'column',
@@ -107,15 +135,18 @@ const styles = StyleSheet.create({
         height: '40%',
         marginBottom: 16,
     },
+
     miniContainerUser: {
         display: 'flex',
         flexDirection: 'row',
     },
+
     miniContainerText: {
         paddingLeft: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     modalView: {
         margin: 20,
         backgroundColor: 'white',
@@ -131,11 +162,17 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+
     modalText: {
         fontSize: 26,
         marginBottom: 15,
         textAlign: 'center',
     },
+
+    marginBottom: {
+        marginBottom: 10,
+    },
+
     input: {
         height: 40,
         width: '100%',
@@ -146,47 +183,57 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBE7E5',
 
     },
+
     btn: {
         marginBottom: 16,
         backgroundColor: '#402B1B',
         borderRadius: 10,
         padding: 10,
     },  
+
     btnText: {
         textAlign: 'center',
         color: 'white',
         fontSize: 16,
     },
+
     miniContainerBtn: {
         display: 'flex',
         flexDirection: 'row',
     },
+
     title: {
         color: '#F5E5D7',
         fontSize: 24,
     },
+
     text: {
         color: '#F5E5D7',
         fontSize: 14,
     },
+
     imageUser: {
         width: 70,
         height: 70,
     },
+
     miniContainerBtn: {
         padding: 16,
     },
+
     btn: {
         marginBottom: 16,
         backgroundColor: '#402B1B',
         borderRadius: 10,
         padding: 10,
     },  
+
     btnText: {
         textAlign: 'center',
         color: 'white',
         fontSize: 16,
     },
+
     imgBackground: {
         flex: 1,
         width: '100%',
@@ -194,6 +241,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
     // Container livre
     containerLivres: {
         width: '90%',
@@ -202,6 +250,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ECD8CC',
         elevation: 5,
     },
+
     livreTitle: {
         color: '#AF8F7C',
         fontSize: 28,

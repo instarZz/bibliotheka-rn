@@ -46,13 +46,13 @@ export default function App() {
           component={Home} 
           options={{ headerShown: false }}
         />
-        {isUserLoggedIn && (
+        {/* {isUserLoggedIn && ( */}
           <tab.Screen 
             name='Mon Profil' 
             component={Profil} 
             options={{ headerShown: false }} 
           />
-        )}
+        {/* )} */}
         <tab.Screen 
           name='Paramètres' 
           component={Parametre} 
