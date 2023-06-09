@@ -66,6 +66,7 @@ const Inscription = () => {
                     <TouchableOpacity style={styles.btn}>
                         <Text style={styles.btnText}>S'incrire</Text>
                     </TouchableOpacity>
+                    
                 </View>
             </ImageBackground>
         </SafeAreaView>
