@@ -3,11 +3,11 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 const Home = () => {
     return (
         <View style={styles.container}>
-        <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode="cover" style={styles.imageBackground}>
-          <Image source={require('./assets/images/bibliotheka_icon.png')} style={styles.imageLogo}/>
-          <Text style={styles.textHome}>Bibliotheka</Text>
-        </ImageBackground>
-      </View>
+            <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode="cover" style={styles.imageBackground}>
+                <Image source={require('./assets/images/bibliotheka_icon.png')} style={styles.imageLogo}/>
+                <Text style={styles.textHome}>Bibliotheka</Text>
+            </ImageBackground>
+        </View>
     );
 };
 
