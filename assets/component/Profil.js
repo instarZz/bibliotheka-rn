@@ -9,7 +9,8 @@ const Profil = () => {
 
     const [modalBooks, setModalBooks] = useState(false);
     const [modalEditProfil, setModalEditProfil] = useState(false);
-    
+    const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
@@ -97,13 +98,23 @@ const Profil = () => {
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Nom d'utilisateur"
+                                        placeholder="Changez votre nom d'utilisateur"
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Email"
+                                        placeholder="Changez votre Email"
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Changez votre mot de passe"
                                     />
 
+                                    <Button     
+                                        title="Supprimez le compte"
+                                        color="#B22222"
+                                        onPress={() => setModalConfirmDelete(true)}
+                                    />
+                                    <View style={styles.marginBottom} />
                                     <Button     
                                         title="Editer"
                                         color="#402B1B"
@@ -118,6 +129,34 @@ const Profil = () => {
                                 </View>
                             </View>
                         </Modal>
+                        
+                        {/* Modal confirm delete */}
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalConfirmDelete}
+                            onRequestClose={() => {
+                                setModalConfirmDelete(!modalConfirmDelete);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text>Etes vous sur de vouloir supprimer votre compte ?</Text>
+                                    <View style={styles.containerButton}>
+                                        <Button
+                                            title="Supprimez"
+                                            color="#B22222"
+                                        />
+                                        <Button
+                                            title="Non"
+                                            color="#402B1B"
+                                            onPress={() => setModalConfirmDelete(!modalConfirmDelete)}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+
 
                         <Button
                             title="Ajouter un livre"
@@ -179,6 +218,13 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 4,
         elevation: 5,
+    },
+
+    containerButton: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 16,
     },
 
     miniContainerUser: {

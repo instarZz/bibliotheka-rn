@@ -6,10 +6,10 @@ import { useState } from 'react';
 import React from 'react';
 
 import Profil from './assets/component/Profil';
-import Parametre from './assets/component/Parametre.js';
 import Home from './assets/component/Home';
 import Inscription from './assets/component/Inscription';
 import Connexion from './assets/component/Connexion';
+import Statistiques from './assets/component/Statistiques';
 
 const tab = createBottomTabNavigator();
 
@@ -34,6 +34,8 @@ export default function App() {
               iconName = "add-circle-outline"
             } else if (route.name == "Connexion") {
               iconName = "enter-outline";
+            } else if (route.name == "Statistiques") {
+              iconName = "stats-chart-outline";
             }
 
             return <Ionicons name={iconName} size={25} color='#402B1B'/>
@@ -46,6 +48,11 @@ export default function App() {
           component={Home} 
           options={{ headerShown: false }}
         />
+        <tab.Screen 
+          name='Statistiques' 
+          component={Statistiques} 
+          options={{ headerShown: false }}
+        />
         {/* {isUserLoggedIn && ( */}
           <tab.Screen 
             name='Mon Profil' 
@@ -53,11 +60,6 @@ export default function App() {
             options={{ headerShown: false }} 
           />
         {/* )} */}
-        <tab.Screen 
-          name='Paramètres' 
-          component={Parametre} 
-          options={{ headerShown: false }}
-        />
         <tab.Screen 
           name='Inscription' 
           component={Inscription} 
