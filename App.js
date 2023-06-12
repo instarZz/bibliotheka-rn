@@ -11,6 +11,13 @@ import Inscription from './assets/component/Inscription';
 import Connexion from './assets/component/Connexion';
 import Statistiques from './assets/component/Statistiques';
 
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  "ViewPropTypes will be removed",
+  "ColorPropType will be removed",
+])
+
 const tab = createBottomTabNavigator();
 
 export default function App() {
