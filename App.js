@@ -5,11 +5,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 import React from 'react';
 
-import Profil from './Profil';
-import Parametre from './Parametre.js';
-import Home from './Home';
-import Inscription from './Inscription';
-import Connexion from './Connexion';
+import Profil from './assets/component/Profil';
+import Parametre from './assets/component/Parametre.js';
+import Home from './assets/component/Home';
+import Inscription from './assets/component/Inscription';
+import Connexion from './assets/component/Connexion';
 
 const tab = createBottomTabNavigator();
 

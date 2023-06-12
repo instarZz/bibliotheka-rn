@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode="cover" style={styles.imageBackground}>
-                <Image source={require('./assets/images/bibliotheka_icon.png')} style={styles.imageLogo}/>
+            <ImageBackground source={require('../images/etageres.jpg')} resizeMode="cover" style={styles.imageBackground}>
+                <Image source={require('../images/bibliotheka_icon.png')} style={styles.imageLogo}/>
                 <Text style={styles.textHome}>Bibliotheka</Text>
             </ImageBackground>
         </SafeAreaView>

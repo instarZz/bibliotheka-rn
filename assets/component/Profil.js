@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, Pressable, View, Image, TouchableOpacity, Button, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Modal, TextInput, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import Carousel from 'react-native-snap-carousel';
 
 const Profil = () => {
 
-    const [modalVisible, setModalVisible] = useState(false);
-
+    const [modalBooks, setModalBooks] = useState(false);
+    const [modalEditProfil, setModalEditProfil] = useState(false);
+    
     return (
         <SafeAreaView style={styles.container}>
-            <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
+            <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
                 <View style={styles.containerProfil}>
                     <View style={styles.miniContainerUser}>
                         <Image 
-                            source={require('./assets/images/utilisateur.png')}
+                            source={require('../images/utilisateur.png')}
                             style={styles.imageUser}
                         />
                         <View style={styles.miniContainerText}>
@@ -23,12 +26,13 @@ const Profil = () => {
                     </View>
                     <View style={styles.miniContainerBtn}>
 
+                        {/* Modal addBooks */}
                         <Modal
                             animationType="slide"
                             transparent={true}
-                            visible={modalVisible}
+                            visible={modalBooks}
                             onRequestClose={() => {
-                                setModalVisible(!modalVisible);
+                                setModalBooks(!modalBooks);
                             }}
                         >
                             <View style={styles.centeredView}>
@@ -68,32 +72,57 @@ const Profil = () => {
                                     <Button
                                         title="Fermer"
                                         color="#402B1B"
-                                        onPress={() => setModalVisible(!modalVisible)}
+                                        onPress={() => setModalBooks(!modalBooks)}
                                     />
                                     </View>
                                 </View>
                             </View>
                         </Modal>
 
-                        {/* <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => setModalVisible(true)}
-                            >
-                            <Text style={styles.btnText}>Ajouter un Livre</Text>
-                        </TouchableOpacity>
+                        {/* Modal Edit Profil */}
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalEditProfil}
+                            onRequestClose={() => {
+                                setModalEditProfil(!modalEditProfil);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text>Edition du profil</Text>
+                                    <Image 
+                                        source={require('../images/utilisateur.png')}
+                                        style={styles.imageUser}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Nom d'utilisateur"
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Email"
+                                    />
 
-                        <TouchableOpacity style={styles.btn}>
-                            <Text style={styles.btnText}>Statistique</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.btn}>
-                            <Text style={styles.btnText}>Editer mon profil</Text>
-                        </TouchableOpacity> */}
+                                    <Button     
+                                        title="Editer"
+                                        color="#402B1B"
+                                        onPress={{}}
+                                    />
+                                    <View style={styles.marginBottom} />
+                                    <Button
+                                        title="Fermer"
+                                        color="#402B1B"
+                                        onPress={() => setModalEditProfil(!modalEditProfil)}
+                                    />
+                                </View>
+                            </View>
+                        </Modal>
 
                         <Button
                             title="Ajouter un livre"
                             color="#402B1B"
-                            onPress={() => setModalVisible(true)}
+                            onPress={() => setModalBooks(true)}
                         />
                         <View style={styles.marginBottom} />
                         <Button
@@ -104,6 +133,7 @@ const Profil = () => {
                         <Button
                             title="Editer mon profil"
                             color="#402B1B"
+                            onPress={() => setModalEditProfil(true)}
                         />
 
                     </View>
@@ -112,6 +142,7 @@ const Profil = () => {
                 <View style={styles.containerLivres}>
                     <Text style={styles.livreTitle}>Livres en cours de lecture</Text>
                 </View>
+
             </ImageBackground>
         </SafeAreaView>
     );
@@ -125,6 +156,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBE7E5',
     },
 
+    containerCarousel: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     containerProfil: {
         display: 'flex',
         flexDirection: 'column',
@@ -134,6 +171,14 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '40%',
         marginBottom: 16,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5,
     },
 
     miniContainerUser: {
@@ -204,7 +249,8 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#F5E5D7',
-        fontSize: 24,
+        fontSize: 34,
+        fontWeight: 'bold',
     },
 
     text: {
@@ -257,6 +303,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     
+    // Slider
+    slide: {
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    // title: {
+    //     fontSize: 24,
+    //     fontWeight: 'bold',
+    // },
 });
   
 export default Profil;

@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Image, ImageBackground, Touc
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Connexion = () => {
+const Inscription = () => {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -29,10 +29,21 @@ const Connexion = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ImageBackground source={require('./assets/images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
+            <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
                 <View style={styles.containerRegister}>
-                    <Text style={styles.title}>Connexion</Text>
-                    
+                    <Text style={styles.title}>Inscription</Text>
+                    <View style={styles.containerImg}>
+                        <Image
+                            style={styles.img}
+                            source={require('../images/utilisateur.png')}
+                        />
+                        <Icon
+                            name="download-outline"
+                            size={30}
+                            color="white"
+                        />
+                        <Text>Importez votre photo</Text>
+                    </View>
                     <TextInput
                         style={styles.input}
                         placeholder="Nom d'utilisateur"
@@ -46,13 +57,18 @@ const Connexion = () => {
                         onChangeText={handlePasswordChange}
                         value={password}
                     />
-
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email"
+                        onChangeText={handleEmailChange}
+                        value={email}
+                    />
                     {/* <TouchableOpacity style={styles.btn}>
-                        <Text style={styles.btnText}>Se Connecter</Text>
+                        <Text style={styles.btnText}>S'incrire</Text>
                     </TouchableOpacity> */}
 
                     <Button
-                        title="Se connecter"
+                        title="S'inscrire"
                         color="#402B1B"
                     />
                 </View>
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
     },
 
     containerRegister: {
-        height: '40%',
+        height: '90%',
         width: '90%',
         backgroundColor: '#AF8F7C',
         padding: 16,
@@ -116,7 +132,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         color: '#EBE7E5',
-        marginBottom: 16,
+        marginBottom: 46,
     },
 
     btn: {
@@ -133,4 +149,4 @@ const styles = StyleSheet.create({
     },
 });
   
-export default Connexion;
+export default Inscription;
