@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View, Image, Button, Modal, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Modal, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import Statistiques from './Statistiques';
+import MyCarousel from './CustomCarousel';
 
 const Profil = () => {
 
+    // Navigation vers Stat
     const navigation = useNavigation();
     const handleNavigStat = () => {
         navigation.navigate('Statistiques');
     };
 
+    // useState des modals
     const [modalBooks, setModalBooks] = useState(false);
     const [modalEditProfil, setModalEditProfil] = useState(false);
     const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
@@ -176,6 +178,8 @@ const Profil = () => {
 
                 <View style={styles.containerLivres}>
                     <Text style={styles.livreTitle}>Livres en cours de lecture</Text>
+
+                    <MyCarousel />
                 </View>
 
             </ImageBackground>
@@ -336,7 +340,9 @@ const styles = StyleSheet.create({
         height: '52%',
         borderRadius: 10,
         backgroundColor: '#ECD8CC',
-        elevation: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // elevation: 5,
     },
 
     livreTitle: {
