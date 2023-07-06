@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image, ImageBackground, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -28,9 +28,14 @@ const Connexion = () => {
     };
 
     return (
+        // SageAreaView te permet de mettre une marge en haut du tel pour pas masquer notif, batterie ect
+        // KeyboardAvoidingView est sensé protéger la hauteur des éléments quand le clavier apparait (sensé j'ai bien dit)
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
-                <View style={styles.containerRegister}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={styles.containerRegister}
+                >
                     <Text style={styles.title}>Connexion</Text>
                     
                     <TextInput
@@ -55,7 +60,7 @@ const Connexion = () => {
                         title="Se connecter"
                         color="#402B1B"
                     />
-                </View>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView>
     );
@@ -69,7 +74,6 @@ const styles = StyleSheet.create({
     },
 
     containerRegister: {
-        height: '40%',
         width: '90%',
         backgroundColor: '#AF8F7C',
         padding: 16,
