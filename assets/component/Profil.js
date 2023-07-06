@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
 import { StyleSheet, Text, View, Image, Button, Modal, TextInput, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import Carousel from 'react-native-snap-carousel';
+import { useNavigation } from '@react-navigation/native';
+import Statistiques from './Statistiques';
 
 const Profil = () => {
+
+    const navigation = useNavigation();
+    const handleNavigStat = () => {
+        navigation.navigate('Statistiques');
+    };
 
     const [modalBooks, setModalBooks] = useState(false);
     const [modalEditProfil, setModalEditProfil] = useState(false);
@@ -54,17 +59,6 @@ const Profil = () => {
                                     />
                                     
                                     <View style={styles.miniContainerBtn}>
-                                        {/* <Pressable
-                                        style={styles.btn}
-                                        onPress={{}}>
-                                            <Text style={styles.btnText}>Rechercher</Text>
-                                        </Pressable>
-
-                                        <Pressable
-                                        style={styles.btn}
-                                        onPress={() => setModalVisible(!modalVisible)}>
-                                            <Text style={styles.btnText}>Fermer</Text>
-                                        </Pressable> */}
                                     <Button
                                         title="Rechercher"
                                         color="#402B1B"
@@ -91,11 +85,12 @@ const Profil = () => {
                         >
                             <View style={styles.centeredView}>
                                 <View style={styles.modalView}>
-                                    <Text>Edition du profil</Text>
+                                    <Text style={styles.modalText}>Edition du profil</Text>
                                     <Image 
                                         source={require('../images/utilisateur.png')}
                                         style={styles.imageUser}
                                     />
+                                    <View style={styles.marginBottom} />
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Changez votre nom d'utilisateur"
@@ -167,6 +162,7 @@ const Profil = () => {
                         <Button
                             title="Statistiques"
                             color="#402B1B"
+                            onPress={handleNavigStat}
                         />
                         <View style={styles.marginBottom} />
                         <Button
@@ -256,7 +252,7 @@ const styles = StyleSheet.create({
 
     modalText: {
         fontSize: 26,
-        marginBottom: 15,
+        marginBottom: 14,
         textAlign: 'center',
     },
 
