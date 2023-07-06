@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { View, Text, TextInput, Button, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,7 +31,10 @@ const Inscription = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
-                <View style={styles.containerRegister}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={styles.containerRegister}
+                >
                     <Text style={styles.title}>Inscription</Text>
                     <View style={styles.containerImg}>
                         <Image
@@ -71,7 +75,7 @@ const Inscription = () => {
                         title="S'inscrire"
                         color="#402B1B"
                     />
-                </View>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView>
     );
@@ -85,7 +89,6 @@ const styles = StyleSheet.create({
     },
 
     containerRegister: {
-        height: '90%',
         width: '90%',
         backgroundColor: '#AF8F7C',
         padding: 16,
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         color: '#EBE7E5',
-        marginBottom: 46,
+        marginBottom: 12,
     },
 
     btn: {
