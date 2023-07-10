@@ -8,7 +8,13 @@ import {  CarouselBooksReaded as ReadedCarousel,
     CarouselBooksInProgress as InProgCarousel,
     CarouselBooksToRead as ToReadCarousel }
 from './CustomCarousel';
-import { EditProfileModal, AddBooksModal, ConfirmDeleteProfil } from './CustomModal';
+
+import { EditProfileModal, 
+    AddBooksModal, 
+    ConfirmDeleteProfil, 
+    DetailsBook, 
+    EditDetailsBook
+} from './CustomModal';
 
 const Profil = () => {
 
@@ -22,12 +28,15 @@ const Profil = () => {
     const [addBooksModalVisible, setAddBooksModalVisible] = useState(false);
     const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
     const [confirmDeleteProfilVisible, setConfirmDeleteProfilVisible] = useState(false);
+    const [detailsBookVisible, setDetailsBookVisible] = useState(false);
+    const [editDetailsBookVisible, setEditDetailsBookVisible] = useState(false);
     // useState Carousel
     const [carouselType, setCarouselType] = useState('readed');
     // useState active button
     const [ activeButton, setActiveButton ] = useState(null);
 
     // méthodes des modals
+    // Edit Profil
     const openEditProfileModal = () => {
         setEditProfileModalVisible(true);
     }
@@ -35,6 +44,7 @@ const Profil = () => {
         setEditProfileModalVisible(false);
     }
 
+    // Add Books
     const openAddBooksModal = () => {
         setAddBooksModalVisible(true);
     }
@@ -42,11 +52,28 @@ const Profil = () => {
         setAddBooksModalVisible(false);
     }
 
+    // Confirm Delete
     const openConfirmDeleteProfilModal = () => {
         setConfirmDeleteProfilVisible(true);
     }
     const closeConfirmDeleteProfilModal = () => {
         setConfirmDeleteProfilVisible(false);
+    }
+
+    // Details Book
+    const openDetailsBookModal = () => {
+        setDetailsBookVisible(true);
+    }
+    const closeDetailsBookModal = () => {
+        setDetailsBookVisible(false);
+    }
+
+    // Edit Details Book
+    const openEditDetailsBookModal = () => {
+        setEditDetailsBookVisible(true);
+    }
+    const closeEditDetailsBookModal = () => {
+        setEditDetailsBookVisible(false);
     }
 
     // méthode Carousel
@@ -94,6 +121,10 @@ const Profil = () => {
                         <EditProfileModal visible={editProfileModalVisible} onClose={closeEditProfileModal} />
 
                         <ConfirmDeleteProfil visible={confirmDeleteProfilVisible} onClose={closeConfirmDeleteProfilModal} />
+
+                        <DetailsBook visible={detailsBookVisible} onClose={closeDetailsBookModal} />
+
+                        <EditDetailsBook visible={editDetailsBookVisible} onClose={closeEditDetailsBookModal} />
                         
                         <Button
                             title="Ajouter un livre"
@@ -152,21 +183,6 @@ const Profil = () => {
                         >
                         <Text style={styles.btnText}>À LIRE</Text>
                     </TouchableOpacity>
-                        {/* <Button
-                            title="Livres lus"
-                            color="#402B1B"
-                            onPress={() => toggleCarousel('readed')}
-                        /> */}
-                    {/* <Button
-                        title="En cours"
-                        color="#402B1B"
-                        onPress={() => toggleCarousel('inProgress')}
-                    />
-                    <Button
-                        title="À lire"
-                        color="#402B1B"
-                        onPress={() => toggleCarousel('toRead')}
-                    /> */}
                 </View>
 
                 <View style={styles.containerLivres}>
@@ -205,14 +221,14 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '40%',
         marginBottom: 8,
-        shadowColor: '#000',
+        shadowColor: 'black',
         shadowOffset: {
           width: 0,
-          height: 2,
+          height: 4,
         },
-        shadowOpacity: 0.5,
-        shadowRadius: 4,
-        elevation: 5,
+        shadowOpacity: 0.6,
+        shadowRadius: 5,
+        elevation: 10,
     },
 
     containerButton: {
@@ -251,7 +267,7 @@ const styles = StyleSheet.create({
     },
 
     modalText: {
-        fontSize: 26,
+        fontSize: 20,
         marginBottom: 14,
         textAlign: 'center',
     },
@@ -346,9 +362,8 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 28,
         textAlign: 'center',
-        fontFamily: 'Nunito',
-        fontWeight: 'bold',
-        marginTop: 10,
+        // fontFamily: 'Nunito',
+        marginTop: 16,
     },
     
     // Slider

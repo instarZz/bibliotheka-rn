@@ -23,7 +23,7 @@ const tab = createBottomTabNavigator();
 
 export default function App() {
 
-  //Font :
+  // Font 
   useEffect(() => {
     // Charger la police personnalisée
     Font.loadAsync({
@@ -32,14 +32,20 @@ export default function App() {
     });
   }, []);
 
+  // useState pour si user est log ou pas
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
   return (
+    // Menu avec Ionicone 
     <NavigationContainer>
       <tab.Navigator
         screenOptions={({route}) => ({
           tabBarStyle: { backgroundColor: '#F5E5D7'},
           tabBarActiveTintColor: '#402B1B',
-          tabBarIcon: ({focused, color, size}) => {
+
+          // Ionicon en fonction de la route.name
+          tabBarIcon: ({}) => {
+
             let iconName;
 
             if(route.name == "Accueil") {
@@ -53,7 +59,7 @@ export default function App() {
             } else if (route.name == "Connexion") {
               iconName = "enter-outline";
             } 
-            // else if (route.name == "Statistiques") {
+            // else if (route.name == "Statistiques") { (V2)
             //   iconName = "stats-chart-outline";
             // }
 
@@ -62,12 +68,13 @@ export default function App() {
           tabBarVisible: isUserLoggedIn,
         })}
       >
+        
         <tab.Screen 
           name='Accueil' 
           component={Home} 
           options={{ headerShown: false }}
         />
-        {/* <tab.Screen 
+        {/* <tab.Screen          (V2)
           name='Statistiques' 
           component={Statistiques} 
           options={{ headerShown: false }}
