@@ -41,9 +41,10 @@ export default function App() {
               iconName = "add-circle-outline"
             } else if (route.name == "Connexion") {
               iconName = "enter-outline";
-            } else if (route.name == "Statistiques") {
-              iconName = "stats-chart-outline";
-            }
+            } 
+            // else if (route.name == "Statistiques") {
+            //   iconName = "stats-chart-outline";
+            // }
 
             return <Ionicons name={iconName} size={25} color='#402B1B'/>
           },
@@ -55,11 +56,11 @@ export default function App() {
           component={Home} 
           options={{ headerShown: false }}
         />
-        <tab.Screen 
+        {/* <tab.Screen 
           name='Statistiques' 
           component={Statistiques} 
           options={{ headerShown: false }}
-        />
+        /> */}
         {/* {isUserLoggedIn && ( */}
           <tab.Screen 
             name='Mon Profil' 
