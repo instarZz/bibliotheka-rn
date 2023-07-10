@@ -3,22 +3,27 @@ import { ImageBackground } from 'react-native';
 import { StyleSheet, Text, View, Image, Button, Modal, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import MyCarousel from './CustomCarousel';
+
+import {  CarouselBooksReaded as ReadedCarousel,
+    CarouselBooksInProgress as InProgCarousel,
+    CarouselBooksToRead as ToReadCarousel } from './CustomCarousel';
+
 import { EditProfileModal, AddBooksModal, ConfirmDeleteProfil } from './CustomModal';
 
 const Profil = () => {
 
-    // Navigation vers Stat
-    const navigation = useNavigation();
-    const handleNavigStat = () => {
-        navigation.navigate('Statistiques');
-    };
+    // Navigation vers Stat (V2)
+    // const navigation = useNavigation();
+    // const handleNavigStat = () => {
+    //     navigation.navigate('Statistiques');
+    // };
 
     // useState des modals
     const [addBooksModalVisible, setAddBooksModalVisible] = useState(false);
     const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
     const [confirmDeleteProfilVisible, setConfirmDeleteProfilVisible] = useState(false);
 
+    // méthodes des modals
     const openEditProfileModal = () => {
         setEditProfileModalVisible(true);
     }
@@ -40,6 +45,27 @@ const Profil = () => {
         setConfirmDeleteProfilVisible(false);
     }
 
+    // useState Carousel
+    const [carouselType, setCarouselType] = useState('readed');
+
+    // méthode Carousel
+    const toggleCarousel = (type) => {
+        setCarouselType(type);
+    }
+
+    const getCarouselText = () => {
+        switch(carouselType) {
+            case 'readed':
+                return 'Livres lus';
+            case 'inProgress':
+                return 'Livre en cours de lecture';
+            case 'toRead':
+                return 'Livres à lire';
+            default:
+                return '';
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
@@ -56,16 +82,13 @@ const Profil = () => {
                     </View>
                     <View style={styles.miniContainerBtn}>
 
-                        {/* Modal addBooks */}
+                        {/* Modal */}
                         <AddBooksModal visible={addBooksModalVisible} onClose={closeAddBooksModal} />
 
                         <EditProfileModal visible={editProfileModalVisible} onClose={closeEditProfileModal} />
 
                         <ConfirmDeleteProfil visible={confirmDeleteProfilVisible} onClose={closeConfirmDeleteProfilModal} />
                         
-                        
-
-
                         <Button
                             title="Ajouter un livre"
                             color="#402B1B"
@@ -73,7 +96,7 @@ const Profil = () => {
                         />
                         {/* <View style={styles.marginBottom} />
                         <Button
-                            title="Statistiques"
+                            title="Statistiques"   (V2)
                             color="#402B1B"
                             onPress={handleNavigStat}
                         /> */}
@@ -92,11 +115,31 @@ const Profil = () => {
 
                     </View>
                 </View>
+                
+                <View style={styles.miniContainerUser}>
+                    <Button
+                        title="Livres lus"
+                        color="#402B1B"
+                        onPress={() => toggleCarousel('readed')}
+                    />
+                    <Button
+                        title="En cours"
+                        color="#402B1B"
+                        onPress={() => toggleCarousel('inProgress')}
+                    />
+                    <Button
+                        title="À lire"
+                        color="#402B1B"
+                        onPress={() => toggleCarousel('toRead')}
+                    />
+                </View>
 
                 <View style={styles.containerLivres}>
-                    <Text style={styles.livreTitle}>Livres en cours de lecture</Text>
+                    <Text style={styles.livreTitle}>{getCarouselText()}</Text>
 
-                    <MyCarousel />
+                    {carouselType === 'readed' && <ReadedCarousel visible={true} />}
+                    {carouselType === 'inProgress' && <InProgCarousel visible={true} />}
+                    {carouselType === 'toRead' && <ToReadCarousel visible={true} />}
                 </View>
 
             </ImageBackground>
@@ -266,6 +309,7 @@ const styles = StyleSheet.create({
         color: '#AF8F7C',
         fontSize: 28,
         textAlign: 'center',
+        marginTop: 10,
     },
     
     // Slider
@@ -274,11 +318,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-    // title: {
-    //     fontSize: 24,
-    //     fontWeight: 'bold',
-    // },
 });
   
 export default Profil;
