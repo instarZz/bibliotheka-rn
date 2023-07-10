@@ -60,35 +60,27 @@ const MyCarousel = () => {
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
 
     },
     shadowContainer: {
-        shadowColor: '#000', // Couleur de l'ombre
-        shadowOpacity: 0.3, // Opacité de l'ombre
-        shadowRadius: 4, // Rayon de l'ombre
-        shadowOffset: {
-          width: 0, // Décalage horizontal de l'ombre
-          height: 2, // Décalage vertical de l'ombre
-        },
+      shadowColor: '#000', // Couleur de l'ombre
+      shadowOpacity: 0.3, // Opacité de l'ombre
+      shadowRadius: 4, // Rayon de l'ombre
+      shadowOffset: {
+        width: 0, // Décalage horizontal de l'ombre
+        height: 2, // Décalage vertical de l'ombre
+      },
     },
     title: {
-        fontSize: 16,
+      fontSize: 16,
     },
     img: {
-        width: 90,
-        height: 170,
-        borderRadius: 10,
-        elevation: 4, // Niveau d'élévation pour l'effet d'ombre
-        shadowColor: '#000', // Couleur de l'ombre
-        shadowOpacity: 0.3, // Opacité de l'ombre
-        shadowRadius: 4, // Rayon de l'ombre
-        shadowOffset: {
-          width: 0, // Décalage horizontal de l'ombre
-          height: 2, // Décalage vertical de l'ombre
-        },
+      width: 90,
+      height: 170,
+      borderRadius: 10,
     }
 
 });

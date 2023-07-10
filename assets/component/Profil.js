@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, Button, Modal, TextInput } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MyCarousel from './CustomCarousel';
+import { EditProfileModal, AddBooksModal, ConfirmDeleteProfil } from './CustomModal';
 
 const Profil = () => {
 
@@ -14,9 +15,30 @@ const Profil = () => {
     };
 
     // useState des modals
-    const [modalBooks, setModalBooks] = useState(false);
-    const [modalEditProfil, setModalEditProfil] = useState(false);
-    const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
+    const [addBooksModalVisible, setAddBooksModalVisible] = useState(false);
+    const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
+    const [confirmDeleteProfilVisible, setConfirmDeleteProfilVisible] = useState(false);
+
+    const openEditProfileModal = () => {
+        setEditProfileModalVisible(true);
+    }
+    const closeEditProfileModal = () => {
+        setEditProfileModalVisible(false);
+    }
+
+    const openAddBooksModal = () => {
+        setAddBooksModalVisible(true);
+    }
+    const closeAddBooksModal = () => {
+        setAddBooksModalVisible(false);
+    }
+
+    const openConfirmDeleteProfilModal = () => {
+        setConfirmDeleteProfilVisible(true);
+    }
+    const closeConfirmDeleteProfilModal = () => {
+        setConfirmDeleteProfilVisible(false);
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -35,142 +57,37 @@ const Profil = () => {
                     <View style={styles.miniContainerBtn}>
 
                         {/* Modal addBooks */}
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={modalBooks}
-                            onRequestClose={() => {
-                                setModalBooks(!modalBooks);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text style={styles.modalText}>Ajoutez un livre !</Text>
+                        <AddBooksModal visible={addBooksModalVisible} onClose={closeAddBooksModal} />
 
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Titre du livre"
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Auteur"
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="ISBN (si connu)"
-                                    />
-                                    
-                                    <View style={styles.miniContainerBtn}>
-                                    <Button
-                                        title="Rechercher"
-                                        color="#402B1B"
-                                    />
-                                    <View style={styles.marginBottom} />
-                                    <Button
-                                        title="Fermer"
-                                        color="#402B1B"
-                                        onPress={() => setModalBooks(!modalBooks)}
-                                    />
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
+                        <EditProfileModal visible={editProfileModalVisible} onClose={closeEditProfileModal} />
 
-                        {/* Modal Edit Profil */}
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={modalEditProfil}
-                            onRequestClose={() => {
-                                setModalEditProfil(!modalEditProfil);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text style={styles.modalText}>Edition du profil</Text>
-                                    <Image 
-                                        source={require('../images/utilisateur.png')}
-                                        style={styles.imageUser}
-                                    />
-                                    <View style={styles.marginBottom} />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Changez votre nom d'utilisateur"
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Changez votre Email"
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Changez votre mot de passe"
-                                    />
-
-                                    <Button     
-                                        title="Supprimez le compte"
-                                        color="#B22222"
-                                        onPress={() => setModalConfirmDelete(true)}
-                                    />
-                                    <View style={styles.marginBottom} />
-                                    <Button     
-                                        title="Editer"
-                                        color="#402B1B"
-                                        onPress={{}}
-                                    />
-                                    <View style={styles.marginBottom} />
-                                    <Button
-                                        title="Fermer"
-                                        color="#402B1B"
-                                        onPress={() => setModalEditProfil(!modalEditProfil)}
-                                    />
-                                </View>
-                            </View>
-                        </Modal>
+                        <ConfirmDeleteProfil visible={confirmDeleteProfilVisible} onClose={closeConfirmDeleteProfilModal} />
                         
-                        {/* Modal confirm delete */}
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={modalConfirmDelete}
-                            onRequestClose={() => {
-                                setModalConfirmDelete(!modalConfirmDelete);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text>Etes vous sur de vouloir supprimer votre compte ?</Text>
-                                    <View style={styles.containerButton}>
-                                        <Button
-                                            title="Supprimez"
-                                            color="#B22222"
-                                        />
-                                        <Button
-                                            title="Non"
-                                            color="#402B1B"
-                                            onPress={() => setModalConfirmDelete(!modalConfirmDelete)}
-                                        />
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
+                        
 
 
                         <Button
                             title="Ajouter un livre"
                             color="#402B1B"
-                            onPress={() => setModalBooks(true)}
+                            onPress={openAddBooksModal}
                         />
-                        <View style={styles.marginBottom} />
+                        {/* <View style={styles.marginBottom} />
                         <Button
                             title="Statistiques"
                             color="#402B1B"
                             onPress={handleNavigStat}
-                        />
+                        /> */}
                         <View style={styles.marginBottom} />
                         <Button
                             title="Editer mon profil"
                             color="#402B1B"
-                            onPress={() => setModalEditProfil(true)}
+                            onPress={openEditProfileModal}
+                        />
+                        <View style={styles.marginBottom} />
+                        <Button     
+                        title="Supprimez le compte"
+                        color="#B22222"
+                        onPress={openConfirmDeleteProfilModal}
                         />
 
                     </View>
