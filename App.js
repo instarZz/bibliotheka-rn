@@ -2,8 +2,9 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
+import * as Font from 'expo-font';
 
 import Profil from './assets/component/Profil';
 import Home from './assets/component/Home';
@@ -21,14 +22,30 @@ LogBox.ignoreLogs([
 const tab = createBottomTabNavigator();
 
 export default function App() {
+
+  // Font 
+  useEffect(() => {
+    // Charger la police personnalisée
+    Font.loadAsync({
+      'Nunito': require('./assets/fonts/Nunito.ttf'),
+      'Poppins': require('./assets/fonts/Poppins-Regular.ttf'),
+    });
+  }, []);
+
+  // useState pour si user est log ou pas
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
   return (
+    // Menu avec Ionicone 
     <NavigationContainer>
       <tab.Navigator
         screenOptions={({route}) => ({
           tabBarStyle: { backgroundColor: '#F5E5D7'},
           tabBarActiveTintColor: '#402B1B',
-          tabBarIcon: ({focused, color, size}) => {
+
+          // Ionicon en fonction de la route.name
+          tabBarIcon: ({}) => {
+
             let iconName;
 
             if(route.name == "Accueil") {
@@ -42,7 +59,7 @@ export default function App() {
             } else if (route.name == "Connexion") {
               iconName = "enter-outline";
             } 
-            // else if (route.name == "Statistiques") {
+            // else if (route.name == "Statistiques") { (V2)
             //   iconName = "stats-chart-outline";
             // }
 
@@ -51,12 +68,13 @@ export default function App() {
           tabBarVisible: isUserLoggedIn,
         })}
       >
+        
         <tab.Screen 
           name='Accueil' 
           component={Home} 
           options={{ headerShown: false }}
         />
-        {/* <tab.Screen 
+        {/* <tab.Screen          (V2)
           name='Statistiques' 
           component={Statistiques} 
           options={{ headerShown: false }}

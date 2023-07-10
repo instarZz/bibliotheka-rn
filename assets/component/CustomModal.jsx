@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Modal, Button, Image, TextInput } from 'react-native';
 
 const EditProfileModal = ({visible, onClose}) => {
@@ -30,6 +30,7 @@ const EditProfileModal = ({visible, onClose}) => {
                     />
 
                     <View style={styles.marginBottom} />
+                    <View style={styles.containerButton}>
                     <Button     
                         title="Editer"
                         color="#402B1B"
@@ -41,6 +42,7 @@ const EditProfileModal = ({visible, onClose}) => {
                         color="#402B1B"
                         onPress={onClose}
                     />
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -71,7 +73,7 @@ const AddBooksModal = ({visible, onClose}) => {
                         placeholder="ISBN (si connu)"
                     />
                     
-                    <View style={styles.miniContainerBtn}>
+                    <View style={styles.containerButton}>
                     <Button
                         title="Rechercher"
                         color="#402B1B"
@@ -95,24 +97,107 @@ const ConfirmDeleteProfil = ({visible, onClose}) => {
         animationType="slide"
         transparent={true}
         visible={visible}
-    >
-        <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-                <Text style={styles.modalText}>Etes vous sur de vouloir supprimer votre compte ?</Text>
-                <View style={styles.containerButton}>
-                    <Button
-                        title="Supprimez"
-                        color="#B22222"
-                    />
-                    <Button
-                        title="Non"
-                        color="#402B1B"
-                        onPress={onClose}
-                    />
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Etes vous sur de vouloir supprimer votre compte ?</Text>
+                    <View style={styles.containerButton}>
+                        <Button
+                            title="Supprimez"
+                            color="#B22222"
+                        />
+                        <Button
+                            title="Non"
+                            color="#402B1B"
+                            onPress={onClose}
+                        />
+                    </View>
                 </View>
             </View>
-        </View>
-    </Modal>
+        </Modal>
+    );
+};
+
+// A mettre au onPress des livres (openDetailsBookModal)
+const DetailsBook = ({visible, onClose}) => {
+
+    const [editDetailsVisible, setEditDetailsVisible] = useState(false);
+    const openEditDetailsBookModal = () => {
+        setEditDetailsVisible(true);
+    };
+
+    return (
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={visible}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Détails du livre</Text>
+                    <View>
+                        <Text style={styles.modalDetail}>Titre du livre :  </Text>
+                        <Text style={styles.modalDetail}>Auteur : </Text>
+                        <Text style={styles.modalDetail}>ISBN (si connu) : </Text>
+                    </View>
+                    <View style={styles.marginBottom} />
+                    <View style={styles.containerButton}>
+                        <Button
+                            title="Modifier"
+                            color="#B22222"
+                            onPress={openEditDetailsBookModal}
+                        />
+                        <Button
+                            title="Fermer"
+                            color="#402B1B"
+                            onPress={onClose}
+                        />
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    );
+};
+
+const EditDetailsBook = ({visible, onClose}) => {
+    return (
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={visible}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Edition du livre</Text>
+                    <View style={styles.miniContainerInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Titre du livre"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Auteur"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="ISBN (si connu)"
+                        />
+                    </View>
+                    <View style={styles.marginBottom} />
+                    <View style={styles.containerButton}>
+                        <Button
+                            title="Confirmer"
+                            color="#402B1B"
+                            />
+                        <Button
+                            title="Fermer"
+                            color="#B22222"
+                            onPress={onClose}
+                        />
+                    </View>
+                </View>
+            </View>
+        </Modal>
     );
 };
 
@@ -120,6 +205,9 @@ const styles = StyleSheet.create({
 
     marginBottom: {
         marginBottom: 10,
+    },
+    miniContainerInput: {
+        width: '100%',
     },
     input: {
         height: 40,
@@ -156,6 +244,9 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         textAlign: 'center',
     },
+    modalDetail: {
+        fontSize: 16,
+    },
     miniContainerBtn: {
         display: 'flex',
         flexDirection: 'row',
@@ -165,9 +256,9 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'center',
-        gap: 16,
+        gap: 6,
     },
 
 });
 
-export { EditProfileModal, AddBooksModal, ConfirmDeleteProfil } ;
+export { EditProfileModal, AddBooksModal, ConfirmDeleteProfil, DetailsBook, EditDetailsBook } ;
