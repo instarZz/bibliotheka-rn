@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+
 
 const sliderData = [
     {
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
   shadowContainer: {
     shadowColor: '#000', // Couleur de l'ombre
-    shadowOpacity: 0.3, // Opacité de l'ombre
+    shadowOpacity: 0.4, // Opacité de l'ombre
     shadowRadius: 4, // Rayon de l'ombre
     shadowOffset: {
       width: 0, // Décalage horizontal de l'ombre

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View, Image, Button, Modal, TextInput } from 'react-native';
+import { ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import {  CarouselBooksReaded as ReadedCarousel,
     CarouselBooksInProgress as InProgCarousel,
-    CarouselBooksToRead as ToReadCarousel } from './CustomCarousel';
-
+    CarouselBooksToRead as ToReadCarousel }
+from './CustomCarousel';
 import { EditProfileModal, AddBooksModal, ConfirmDeleteProfil } from './CustomModal';
 
 const Profil = () => {
@@ -22,6 +22,10 @@ const Profil = () => {
     const [addBooksModalVisible, setAddBooksModalVisible] = useState(false);
     const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
     const [confirmDeleteProfilVisible, setConfirmDeleteProfilVisible] = useState(false);
+    // useState Carousel
+    const [carouselType, setCarouselType] = useState('readed');
+    // useState active button
+    const [ activeButton, setActiveButton ] = useState(null);
 
     // méthodes des modals
     const openEditProfileModal = () => {
@@ -45,9 +49,6 @@ const Profil = () => {
         setConfirmDeleteProfilVisible(false);
     }
 
-    // useState Carousel
-    const [carouselType, setCarouselType] = useState('readed');
-
     // méthode Carousel
     const toggleCarousel = (type) => {
         setCarouselType(type);
@@ -63,8 +64,13 @@ const Profil = () => {
                 return 'Livres à lire';
             default:
                 return '';
-        }
-    }
+        };
+    };
+                    
+    // méthode active button
+    const handleButtonClick = (buttonId) => {
+        setActiveButton(buttonId)
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -116,13 +122,42 @@ const Profil = () => {
                     </View>
                 </View>
                 
-                <View style={styles.miniContainerUser}>
-                    <Button
-                        title="Livres lus"
-                        color="#402B1B"
-                        onPress={() => toggleCarousel('readed')}
-                    />
-                    <Button
+                <View style={styles.miniContainerOnglet}>
+                    <TouchableOpacity 
+                        style={[styles.btn, activeButton === 1 && styles.btnActive]}
+                        onPress={() => {
+                            toggleCarousel('readed');
+                            handleButtonClick(1);
+                        }}
+                        >
+                        <Text style={styles.btnText}>LIVRES LUS</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={[styles.btn, activeButton === 2 && styles.btnActive]}
+                        onPress={() => {
+                            toggleCarousel('inProgress');
+                            handleButtonClick(2);
+                        }}
+                        >
+                        <Text style={styles.btnText}>EN COURS</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={[styles.btn, activeButton === 3 && styles.btnActive]}
+                        onPress={() => {
+                            toggleCarousel('toRead');
+                            handleButtonClick(3);
+                        }}
+                        >
+                        <Text style={styles.btnText}>À LIRE</Text>
+                    </TouchableOpacity>
+                        {/* <Button
+                            title="Livres lus"
+                            color="#402B1B"
+                            onPress={() => toggleCarousel('readed')}
+                        /> */}
+                    {/* <Button
                         title="En cours"
                         color="#402B1B"
                         onPress={() => toggleCarousel('inProgress')}
@@ -131,7 +166,7 @@ const Profil = () => {
                         title="À lire"
                         color="#402B1B"
                         onPress={() => toggleCarousel('toRead')}
-                    />
+                    /> */}
                 </View>
 
                 <View style={styles.containerLivres}>
@@ -169,7 +204,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '90%',
         height: '40%',
-        marginBottom: 16,
+        marginBottom: 8,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -190,6 +225,7 @@ const styles = StyleSheet.create({
     miniContainerUser: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
     },
 
     miniContainerText: {
@@ -235,19 +271,6 @@ const styles = StyleSheet.create({
 
     },
 
-    btn: {
-        marginBottom: 16,
-        backgroundColor: '#402B1B',
-        borderRadius: 10,
-        padding: 10,
-    },  
-
-    btnText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 16,
-    },
-
     miniContainerBtn: {
         display: 'flex',
         flexDirection: 'row',
@@ -273,17 +296,31 @@ const styles = StyleSheet.create({
         padding: 16,
     },
 
+    miniContainerOnglet: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 6,
+    },
     btn: {
-        marginBottom: 16,
         backgroundColor: '#402B1B',
-        borderRadius: 10,
-        padding: 10,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+        padding: 5,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     },  
 
     btnText: {
         textAlign: 'center',
         color: 'white',
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: 600,
+    },
+
+    btnActive: {
+        backgroundColor: '#AF8F7C', // Couleur d'arrière-plan en état actif
     },
 
     imgBackground: {
@@ -306,9 +343,11 @@ const styles = StyleSheet.create({
     },
 
     livreTitle: {
-        color: '#AF8F7C',
+        color: '#000',
         fontSize: 28,
         textAlign: 'center',
+        fontFamily: 'Nunito',
+        fontWeight: 'bold',
         marginTop: 10,
     },
     

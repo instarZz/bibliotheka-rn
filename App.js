@@ -2,8 +2,9 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
+import * as Font from 'expo-font';
 
 import Profil from './assets/component/Profil';
 import Home from './assets/component/Home';
@@ -21,6 +22,16 @@ LogBox.ignoreLogs([
 const tab = createBottomTabNavigator();
 
 export default function App() {
+
+  //Font :
+  useEffect(() => {
+    // Charger la police personnalisée
+    Font.loadAsync({
+      'Nunito': require('./assets/fonts/Nunito.ttf'),
+      'Poppins': require('./assets/fonts/Poppins-Regular.ttf'),
+    });
+  }, []);
+
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   return (
     <NavigationContainer>
