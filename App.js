@@ -74,18 +74,13 @@ export default function App() {
           component={Home} 
           options={{ headerShown: false }}
         />
-        {/* <tab.Screen          (V2)
-          name='Statistiques' 
-          component={Statistiques} 
-          options={{ headerShown: false }}
-        /> */}
-        {/* {isUserLoggedIn && ( */}
+         {isUserLoggedIn && (
           <tab.Screen 
             name='Mon Profil' 
             component={Profil} 
             options={{ headerShown: false }} 
           />
-        {/* )} */}
+         )}
         <tab.Screen 
           name='Inscription' 
           component={Inscription} 
