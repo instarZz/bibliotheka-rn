@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image, ImageBackground, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {useState} from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    StyleSheet,
+    Image,
+    ImageBackground,
+    TouchableOpacity,
+    Platform,
+    KeyboardAvoidingView
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Connexion = () => {
+import axios from 'axios';
 
-    const [username, setUsername] = useState('');
+const Connexion = () => {
+    const navigation = useNavigation();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleUsernameChange = (text) => {
-        setUsername(text);
-    };
 
     const handlePasswordChange = (text) => {
         setPassword(text);
@@ -21,28 +32,40 @@ const Connexion = () => {
         setEmail(text);
     };
 
-    const handleSubmit = () => {
-        console.log(`Username : ${username}`);
-        console.log(`Email : ${email}`);
-        console.log(`Password : ${password}`);
+    const handleSubmit = async () => {
+
+        console.log('Email : ' + email + ' et mot de passe : ' + password);
+
+        try {
+            const response = await axios.post('http://10.0.2.2:8000/api/login', {
+                email: email,
+                password: password,
+            });
+
+            console.log("Réponse de l'API : ", response.data);
+
+            if (response.data.status === "success") {
+                navigation.navigate('Mon Profil', {userData: response.data});
+            }
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de l'appel à l'API :", error);
+            console.log(error.response.data)
+        }
     };
 
     return (
-        // SageAreaView te permet de mettre une marge en haut du tel pour pas masquer notif, batterie ect
-        // KeyboardAvoidingView est sensé protéger la hauteur des éléments quand le clavier apparait (sensé j'ai bien dit)
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    style={styles.containerRegister}
-                >
+                    style={styles.containerRegister}>
                     <Text style={styles.title}>Connexion</Text>
-                    
+
                     <TextInput
                         style={styles.input}
-                        placeholder="Nom d'utilisateur"
-                        onChangeText={handleUsernameChange}
-                        value={username}
+                        placeholder="Email"
+                        onChangeText={handleEmailChange}
+                        value={email}
                     />
                     <TextInput
                         style={styles.input}
@@ -52,13 +75,10 @@ const Connexion = () => {
                         value={password}
                     />
 
-                    {/* <TouchableOpacity style={styles.btn}>
-                        <Text style={styles.btnText}>Se Connecter</Text>
-                    </TouchableOpacity> */}
-
                     <Button
                         title="Se connecter"
                         color="#402B1B"
+                        onPress={handleSubmit}
                     />
                 </KeyboardAvoidingView>
             </ImageBackground>
@@ -128,13 +148,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#402B1B',
         borderRadius: 10,
         padding: 10,
-    },  
-    
+    },
+
     btnText: {
         textAlign: 'center',
         color: 'white',
         fontSize: 16,
     },
 });
-  
+
 export default Connexion;

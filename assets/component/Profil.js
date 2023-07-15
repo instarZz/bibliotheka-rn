@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
-import { ImageBackground, TouchableOpacity } from 'react-native';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {ImageBackground, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image, Button} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
-import {  CarouselBooksReaded as ReadedCarousel,
+import {
+    CarouselBooksReaded as ReadedCarousel,
     CarouselBooksInProgress as InProgCarousel,
-    CarouselBooksToRead as ToReadCarousel }
-from './CustomCarousel';
+    CarouselBooksToRead as ToReadCarousel
+}
+    from './CustomCarousel';
 
-import { EditProfileModal, 
-    AddBooksModal, 
-    ConfirmDeleteProfil, 
-    DetailsBook, 
+import {
+    EditProfileModal,
+    AddBooksModal,
+    ConfirmDeleteProfil,
+    DetailsBook,
     EditDetailsBook
 } from './CustomModal';
 
-const Profil = () => {
+const Profil = ({route}) => {
 
-    // Navigation vers Stat (V2)
-    // const navigation = useNavigation();
-    // const handleNavigStat = () => {
-    //     navigation.navigate('Statistiques');
-    // };
+    const { userData, activeCarousel } = route.params;
+    const userInfo = userData ? userData.infos_user[0] : null;
+    const token = userData ? userData.token : null;
+    const booksUser = userData ? userData.books_user : null;
+
+    const defaultName = 'Nom par défaut';
+    const defaultEmail = 'email@pardefaut.com';
+
+    const navigation = useNavigation();
 
     // useState des modals
     const [addBooksModalVisible, setAddBooksModalVisible] = useState(false);
@@ -31,11 +38,13 @@ const Profil = () => {
     const [detailsBookVisible, setDetailsBookVisible] = useState(false);
     const [editDetailsBookVisible, setEditDetailsBookVisible] = useState(false);
     // useState Carousel
-    const [carouselType, setCarouselType] = useState('readed');
+    const [carouselType, setCarouselType] = useState(activeCarousel || 'readed');
     // useState active button
-    const [ activeButton, setActiveButton ] = useState(null);
+    const [activeButton, setActiveButton] = useState(null);
+    // useState book details
+    const [bookDetails, setBookDetails] = useState(null);
+    const [showDetailsBookModal, setShowDetailsBookModal] = useState(false);
 
-    // méthodes des modals
     // Edit Profil
     const openEditProfileModal = () => {
         setEditProfileModalVisible(true);
@@ -76,13 +85,17 @@ const Profil = () => {
         setEditDetailsBookVisible(false);
     }
 
-    // méthode Carousel
+    useEffect(() => {
+        toggleCarousel(activeCarousel);
+    }, [activeCarousel]);
+
+    // Carousel method
     const toggleCarousel = (type) => {
         setCarouselType(type);
     }
 
     const getCarouselText = () => {
-        switch(carouselType) {
+        switch (carouselType) {
             case 'readed':
                 return 'Livres lus';
             case 'inProgress':
@@ -91,10 +104,15 @@ const Profil = () => {
                 return 'Livres à lire';
             default:
                 return '';
-        };
+        }
     };
-                    
-    // méthode active button
+
+    // Filter books by status
+    const readedBooks = booksUser.filter(book => book.status === 'read');
+    const inProgressBooks = booksUser.filter(book => book.status === 'reading');
+    const toReadBooks = booksUser.filter(book => book.status === 'to_read');
+
+    // active button method
     const handleButtonClick = (buttonId) => {
         setActiveButton(buttonId)
     };
@@ -104,83 +122,97 @@ const Profil = () => {
             <ImageBackground source={require('../images/etageres.jpg')} resizeMode='cover' style={styles.imgBackground}>
                 <View style={styles.containerProfil}>
                     <View style={styles.miniContainerUser}>
-                        <Image 
+                        <Image
                             source={require('../images/utilisateur.png')}
                             style={styles.imageUser}
                         />
                         <View style={styles.miniContainerText}>
-                            <Text style={styles.title}>Lydia Vetrovs</Text>
-                            <Text style={styles.text}>monemail@email.com</Text>
+                            <Text style={styles.title}>{userInfo ? userInfo.name : defaultName}</Text>
+                            <Text style={styles.text}>{userInfo ? userInfo.email : defaultEmail}</Text>
                         </View>
                     </View>
                     <View style={styles.miniContainerBtn}>
 
                         {/* Modal */}
-                        <AddBooksModal visible={addBooksModalVisible} onClose={closeAddBooksModal} />
+                        {showDetailsBookModal ? (
+                            <DetailsBook
+                                visible={true}
+                                onClose={() => setShowDetailsBookModal(false)}
+                                bookDetails={bookDetails}
+                                token={token}
+                                navigation={navigation}
+                                userData={userData}
+                            />
+                        ) : (
+                            <AddBooksModal
+                                visible={addBooksModalVisible}
+                                onClose={closeAddBooksModal}
+                                token={token}
+                                setBookDetails={setBookDetails}
+                                setShowDetailsBookModal={setShowDetailsBookModal}
+                            />
+                        )}
 
-                        <EditProfileModal visible={editProfileModalVisible} onClose={closeEditProfileModal} />
+                        <EditProfileModal visible={editProfileModalVisible} onClose={closeEditProfileModal}/>
 
-                        <ConfirmDeleteProfil visible={confirmDeleteProfilVisible} onClose={closeConfirmDeleteProfilModal} />
+                        <ConfirmDeleteProfil visible={confirmDeleteProfilVisible}
+                                             onClose={closeConfirmDeleteProfilModal}/>
 
-                        <DetailsBook visible={detailsBookVisible} onClose={closeDetailsBookModal} />
+                        <DetailsBook visible={detailsBookVisible} onClose={closeDetailsBookModal}
+                                     bookDetails={bookDetails}/>
 
-                        <EditDetailsBook visible={editDetailsBookVisible} onClose={closeEditDetailsBookModal} />
-                        
+                        <EditDetailsBook visible={editDetailsBookVisible} onClose={closeEditDetailsBookModal}/>
+
                         <Button
                             title="Ajouter un livre"
                             color="#402B1B"
                             onPress={openAddBooksModal}
                         />
-                        {/* <View style={styles.marginBottom} />
-                        <Button
-                            title="Statistiques"   (V2)
-                            color="#402B1B"
-                            onPress={handleNavigStat}
-                        /> */}
-                        <View style={styles.marginBottom} />
+
+                        <View style={styles.marginBottom}/>
                         <Button
                             title="Editer mon profil"
                             color="#402B1B"
                             onPress={openEditProfileModal}
                         />
-                        <View style={styles.marginBottom} />
-                        <Button     
-                        title="Supprimez le compte"
-                        color="#B22222"
-                        onPress={openConfirmDeleteProfilModal}
+                        <View style={styles.marginBottom}/>
+                        <Button
+                            title="Supprimez le compte"
+                            color="#B22222"
+                            onPress={openConfirmDeleteProfilModal}
                         />
 
                     </View>
                 </View>
-                
+
                 <View style={styles.miniContainerOnglet}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={[styles.btn, activeButton === 1 && styles.btnActive]}
                         onPress={() => {
                             toggleCarousel('readed');
                             handleButtonClick(1);
                         }}
-                        >
+                    >
                         <Text style={styles.btnText}>LIVRES LUS</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={[styles.btn, activeButton === 2 && styles.btnActive]}
                         onPress={() => {
                             toggleCarousel('inProgress');
                             handleButtonClick(2);
                         }}
-                        >
+                    >
                         <Text style={styles.btnText}>EN COURS</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={[styles.btn, activeButton === 3 && styles.btnActive]}
                         onPress={() => {
                             toggleCarousel('toRead');
                             handleButtonClick(3);
                         }}
-                        >
+                    >
                         <Text style={styles.btnText}>À LIRE</Text>
                     </TouchableOpacity>
                 </View>
@@ -188,9 +220,9 @@ const Profil = () => {
                 <View style={styles.containerLivres}>
                     <Text style={styles.livreTitle}>{getCarouselText()}</Text>
 
-                    {carouselType === 'readed' && <ReadedCarousel visible={true} />}
-                    {carouselType === 'inProgress' && <InProgCarousel visible={true} />}
-                    {carouselType === 'toRead' && <ToReadCarousel visible={true} />}
+                    {carouselType === 'readed' && <ReadedCarousel visible={true} books={readedBooks} />}
+                    {carouselType === 'inProgress' && <InProgCarousel visible={true} books={inProgressBooks} />}
+                    {carouselType === 'toRead' && <ToReadCarousel visible={true} books={toReadBooks} />}
                 </View>
 
             </ImageBackground>
@@ -223,8 +255,8 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         shadowColor: 'black',
         shadowOffset: {
-          width: 0,
-          height: 4,
+            width: 0,
+            height: 4,
         },
         shadowOpacity: 0.6,
         shadowRadius: 5,
@@ -258,8 +290,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -290,6 +322,7 @@ const styles = StyleSheet.create({
     miniContainerBtn: {
         display: 'flex',
         flexDirection: 'row',
+        padding: 16,
     },
 
     title: {
@@ -308,10 +341,6 @@ const styles = StyleSheet.create({
         height: 70,
     },
 
-    miniContainerBtn: {
-        padding: 16,
-    },
-
     miniContainerOnglet: {
         display: 'flex',
         flexDirection: 'row',
@@ -326,7 +355,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-    },  
+    },
 
     btnText: {
         textAlign: 'center',
@@ -365,7 +394,7 @@ const styles = StyleSheet.create({
         // fontFamily: 'Nunito',
         marginTop: 16,
     },
-    
+
     // Slider
     slide: {
         width: 300,
@@ -373,5 +402,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-  
+
 export default Profil;
